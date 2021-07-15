@@ -29,6 +29,8 @@ exports.signUp = (req,res) => {
                     res.status(200)
                 }
                 signupToken(newUser)
+                // redirect to login route
+                res.redirect('/login')
             })
             })  
 }
@@ -55,17 +57,9 @@ exports.signIn = (req,res) => {
         } 
 
         // loginToken(existingUser)
-        jwt.sign({
-            id: existingUser._id,
-            email: existingUser.email,
-        }, SECRET, {expiresIn: EXPIRE_TIME},
-        (err, token) => {
-            if (err) {
-                res.status(500).json({err})
-            }else{
-                res.status(200).json({message: "Login Token Successful", token})
-            }
-        })
+        loginToken(existingUser)
+        // redirect to dashboard route
+        res.redirect('/dashboard')
     })
     
 }
@@ -74,4 +68,18 @@ exports.signIn = (req,res) => {
 exports.dashboard = (req,res) => {
     res.send({message: `Welcome to Netflix ${req.body.email}`})
     res.status(200)
+}
+
+// Landing Page
+exports.homePage = (req,res) => {
+    res.send({message: `Welcome to Netflix. Please login`})
+    res.status(200)
+}
+
+// Signout
+exports.signOut = (req,res) => {
+    res.send({message: `Goodbye......`})
+    res.status(200)
+    // redirect to home page
+    res.redirect('/')
 }
