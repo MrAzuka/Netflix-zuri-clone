@@ -9,12 +9,12 @@ exports.signUp = (req,res) => {
         User.findOne({email: req.body.email}, (err, existingUser) => {
             if(existingUser){
                 res.status(400).json({message:'User already exists'})
-            }else{
+            }
+            if(err){
                 res.status(500).json({err})
             }
-        })
-        // Create New User
-        Users.create({
+             // Create New User
+        User.create({
             email: req.body.email,
             password: req.body.password
         }, (err, newUser) => {
@@ -23,8 +23,10 @@ exports.signUp = (req,res) => {
             }
             signupToken(newUser)
         })
-        res.send({message: "New User created"})
-        res.status(200)
+        })
+       
+        // res.send({message: "New User created"})
+        // res.status(200)
     
 }
 
