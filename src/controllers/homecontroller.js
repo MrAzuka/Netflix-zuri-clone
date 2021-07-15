@@ -48,25 +48,24 @@ exports.signIn = (req,res) => {
         }
         // Compare passowrd with hashed password
         // console.log(password)
-        // console.log(User.password)
-        let matchedPassword = bcrypt.compareSync(password, existingUser.password)
+        // console.log(existingUser)
+        let matchedPassword = bcrypt.compare(password, existingUser.password)
         if(!matchedPassword){
             res.status(401).json({message: "Incorrect password"})
         } 
-        
-        // Create a token
-        // jwt.sign({
-        //     id: existingUser._id,
-        //     email: existingUser.email,
-        // }, SECRET, {expiresIn: EXPIRE_TIME},
-        // (err, token) => {
-        //     if (err) {
-        //         res.status(500).json({err})
-        //     }else{
-        //         res.status(200).json({message: "Login Successful", token})
-        //     }
-        // })
-        loginToken(existingUser)
+
+        // loginToken(existingUser)
+        jwt.sign({
+            id: existingUser._id,
+            email: existingUser.email,
+        }, SECRET, {expiresIn: EXPIRE_TIME},
+        (err, token) => {
+            if (err) {
+                res.status(500).json({err})
+            }else{
+                res.status(200).json({message: "Login Token Successful", token})
+            }
+        })
     })
     
 }
