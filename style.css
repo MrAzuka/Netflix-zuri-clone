@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+body{  
+    font-family: Bebas Neue;
+   
+}
+.container{
+    background: yellow;
+}
+
+.row{
+    padding-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.row ul{
+    list-style: none;
+    display: flex;
+    
+    
+}
+.row ul li{
+    padding-left: 10px;
+    color: white;
+    
+    
+    
+}
+.row ul li a{
+    text-decoration: none;
+    color:#fff;
+}
+
+.right{
+    display: flex;
+    list-style: none;
+}
+.right li{
+    padding-left: 20px;
+    color: white;
+}
+
+.title h1{
+    font-size: 150px;
+    text-align: center;
+}
+
+.p {
+    height: 500px;
+    
+}
+
+.title img {
+    padding-left: 450px;
+    padding-top: 180px;
+}
+
+h5{
+    margin-top: 80px;
+}
+.row h1{
+    color: red;
+    font-size: 100;
+}
+h1{
+    font-size: 70px;
+}
+.nil{
+    margin-top: -110px;
+}
+
+.nil img{
+    margin-top: -300px;
+    width: 100px;
+
+
+}
+.both{
+    display: flex;
+
+
+}
+.tap{
+    margin-top: -40px;
+    margin-left: 60px;
+    color: white;
+}
+.id{
+    text-transform: uppercase;
+    color: white;
+
+}
+.movies{
+    background-image: url(./css/bg.jpg);
+    height: 200px;
+    width: 1335px;
+    background-size: cover;
+}
+.movies-item{
+
+    display:  flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+.movies h3{
+    color: white;
+    text-transform: capitalize;
+}
+.movies-item img{
+    width: 260px;
+}
+.movie{
+    background: black;
+    margin-top: -20px;
+}
+.movie h3{
+    text-transform: capitalize;
+    color: white;
+}
+
+.movie-item img{
+    width: 260px;
+}
