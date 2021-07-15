@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const {SECRET, EXPIRE_TIME} = process.env
 
-exports.loginToken = () => {
+exports.loginToken = (existingUser) => {
     jwt.sign({
         id: existingUser._id,
         email: existingUser.email,
@@ -16,7 +16,7 @@ exports.loginToken = () => {
     })
 }
 
-exports.signupToken = () => {
+exports.signupToken = (newUser) => {
     jwt.sign({
         id: newUser._id,
         email: newUser.email,

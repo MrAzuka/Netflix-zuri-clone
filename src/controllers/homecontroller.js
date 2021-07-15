@@ -1,12 +1,16 @@
-const {User} = require('../models/user')
+const User = require('../models/user')
 const {signupToken, loginToken} = require('../jwt/token')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const {SECRET, EXPIRE_TIME} = process.env
+
 
 // SignUp and Registration controller
 exports.signUp = (req,res) => {
-   
+   const {email, password} = req.body
         // Check if email exists
-        User.findOne({email: req.body.email}, (err, existingUser) => {
+        User.findOne({email}, (err, existingUser) => {
             if(existingUser){
                 res.status(400).json({message:'User already exists'})
             }
@@ -14,44 +18,57 @@ exports.signUp = (req,res) => {
                 res.status(500).json({err})
             }
              // Create New User
-        User.create({
-            email: req.body.email,
-            password: req.body.password
-        }, (err, newUser) => {
-            if(err){
-             res.status(500).json({err})
-            }
-            signupToken(newUser)
-        })
-        })
-       
-        // res.send({message: "New User created"})
-        // res.status(200)
-    
+             User.create({
+                email,
+                password
+            }, (err, newUser) => {
+                if(err){
+                res.status(500).json({err})
+                }else{
+                    res.send({message: "New User created"})
+                    res.status(200)
+                }
+                signupToken(newUser)
+            })
+            })  
 }
 
 
 // Signin and Login controller
-exports.signIn = async (req,res) => {
-    try {
-        await User.findOne({email: req.body.email}, (err, existingUser) => {
-            if (err) {
-                res.status(500).json({err})
-            }
-            if(!existingUser) {
-                res.status(401).json({message: "Incorrect Username"})
-            }
-            // Compare passowrd with hashed password
-            let matchedPassword = bcrypt.compareSync(req.body.password, existingUser.password)
-            if(!matchedPassword){
-                res.status(401).json({message: "Incorrect password"})
-            } 
-            loginToken(existingUser)
-        })
-    } catch (error) {
-        res.send({message: "User cannot be login"})
-        res.status(500)
-    }
+exports.signIn = (req,res) => {
+    const {email, password} = req.body
+    
+       // Check if email exist
+    User.findOne({email}, (err,existingUser) => {
+        if (err) {
+            res.status(500).json({err})
+        }
+        if(!existingUser) {
+            res.status(401).json({message: "Incorrect Username"})
+        }
+        // Compare passowrd with hashed password
+        // console.log(password)
+        // console.log(User.password)
+        let matchedPassword = bcrypt.compareSync(password, existingUser.password)
+        if(!matchedPassword){
+            res.status(401).json({message: "Incorrect password"})
+        } 
+        
+        // Create a token
+        // jwt.sign({
+        //     id: existingUser._id,
+        //     email: existingUser.email,
+        // }, SECRET, {expiresIn: EXPIRE_TIME},
+        // (err, token) => {
+        //     if (err) {
+        //         res.status(500).json({err})
+        //     }else{
+        //         res.status(200).json({message: "Login Successful", token})
+        //     }
+        // })
+        loginToken(existingUser)
+    })
+    
 }
 
 // DashBoard
