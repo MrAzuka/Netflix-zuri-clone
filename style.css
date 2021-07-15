@@ -53,7 +53,18 @@
       min-width:1140px;
       background-color: black;    
       overflow-x: hidden;
+      
   }
+  body a {
+    text-decoration: none;
+         
+  }
+  
+  body a:visited {
+    color: white;
+  }
+
+
 
 .first-screen {
     background-image: url("/netflix\ background.jpg");
